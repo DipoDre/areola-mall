@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - "4022:4022"
+    command: npm run start
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/amaccounts
+      - NODE_ENV=production
