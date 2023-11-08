@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  areola-mall-dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "9005:2005"
+    image: areola-mall
+    container_name: areola-mall
+    restart: always

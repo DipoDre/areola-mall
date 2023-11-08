@@ -1,37 +1,24 @@
-FROM node:16-alpine as BUILD_IMAGE
+# Base image
+FROM node:19-alpine
 
-WORKDIR /usr/app
+# Create app directory
+WORKDIR /app
 
-COPY package*.json ./
-COPY tsconfig*.json ./
-
-RUN apk update && apk add openssh git && rm -rf /var/cache/apk/*
-RUN mkdir /root/.ssh/
-ADD id_rsa /root/.ssh/id_rsa
-RUN touch /root/.ssh/known_hosts
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-
-RUN npm install
-
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY . .
 
-RUN npm build
+# Bundle app source
+# COPY ./src ./src
+# COPY tsconfig.json .
+# COPY .eslintrc.json .
+# COPY .prettierrc.js .
+# COPY .env.sample .env
 
-# remove development dependencies
-RUN npm prune --production
+# Install app dependencies
+RUN npm install
 
-# run node prune
-# RUN /usr/local/bin/node-prune
+# Creates a "dist" folder with the production build
+# RUN npm run build
 
-FROM node:16-alpine
-
-WORKDIR /usr/app
-
-# copy from build image
-COPY --from=BUILD_IMAGE /usr/app/build ./build
-COPY --from=BUILD_IMAGE /usr/app/node_modules ./node_modules
-
-COPY package.json ./
-COPY .env .env
-
-CMD [ "npm", "start" ]
+# Start the server using the production build
+CMD [ "npm", "run","deploy" ]
