@@ -6,13 +6,6 @@ import { createError } from "../common/utils";
 
 const router = Router();
 
-// router.get('/api', async (req, res, next) => {
-//   return res.json({
-//     status: true,
-//     message: 'Test API limiter',
-//   })
-// });
-
 router.use("/auth", usersRoutes);
 router.use("/products", productsRoutes);
 

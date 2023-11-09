@@ -1,5 +1,5 @@
 import ProductService from "./product.service";
-import { NextFunction, Response } from "express";
+import { Request, NextFunction, Response } from "express";
 import { createError, success } from "../../common/utils";
 import { IProductCreation } from "../../../types";
 
