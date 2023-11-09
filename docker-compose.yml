@@ -5,6 +5,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+      labels:
+        - portainer_ownership=public
     ports:
       - "9005:2005"
     image: areola-mall
